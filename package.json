@@ -1,0 +1,36 @@
+{
+  "name": "cyclon_webrtc",
+  "version": "0.0.1",
+  "description": "Peer-to-peer webrtc implementation of the CYCLON protocol for Gossip algorithms",
+  "main": "lib/cyclon.js",
+  "scripts": {
+    "test": "jasmine-node test",
+    "debug": "browserify lib/cyclon.js --debug --s Cyclon > build/cyclon.bundle.debug.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justayak/cyclon_webrtc.git"
+  },
+  "keywords": [
+    "peer-to-peer",
+    "webrtc",
+    "gossip",
+    "peer",
+    "sampling",
+    "service"
+  ],
+  "author": "Julian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/justayak/cyclon_webrtc/issues"
+  },
+  "homepage": "https://github.com/justayak/cyclon_webrtc",
+  "dependencies": {
+      "yutils" : ">=0.0.9",
+      "webrtc-adapter" : "*",
+      "underscore" : ">=1.7.0"
+  },
+  "devDependencies":{
+    "uglify-js": "*"
+  }
+}
