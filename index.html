@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        textarea{
+            width: 300px;
+            height: 100px;
+            resize: none;
+        }
+    </style>
+    <script src="build/cyclon.bundle.debug.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+<div>
+    <span id="address"></span>
+</div>
+<button id="active">active</button>
+<button id="active2">active->accept</button>
+<button id="passive">passive</button>
+<br/>
+<div style="position: relative;">
+    <textarea style="float:left; width: 500px;" id="txt" placeholder="data"></textarea>
+    <div style="float:right;" id="neighbors">
+
+    </div>
+</div>
+
+
+</body>
+<script>
+    $(function () {
+
+        var cyclon = new Cyclon();
+
+        setInterval(function () {
+            var peers = cyclon.getPeers();
+            console.log('sze: ', peers.length);
+            var i = 0, L = peers.length;
+            var str = "";
+            for(;i<L;i++) {
+                str += peers[i].address + '<br>';
+            }
+            $('#neighbors').html(str);
+        },1000);
+
+        cyclon.ready(function () {
+            console.log('open!');
+        });
+
+        $("#address").html(cyclon.address);
+
+        $("#active").on('click', function () {
+            cyclon.launch(function onOffer (offer) {
+                $("#txt").val(offer);
+            });
+        });
+
+        $("#passive").on('click', function () {
+            var offer = $("#txt").val();
+            $("#txt").val("");
+            cyclon.answer( offer,
+                    function onAnswer (answer) {
+                        $("#txt").val(answer);
+                    });
+        });
+
+        $("#active2").on('click', function () {
+            var answer = $("#txt").val();
+            cyclon.handshake(answer);
+        });
+
+
+    });
+</script>
+</html>
