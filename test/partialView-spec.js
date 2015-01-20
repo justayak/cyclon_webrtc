@@ -1,22 +1,23 @@
 /**
  * Created by julian on 19/01/15.
  */
-var PartialView = require("./../lib/partialView.js");
-var Peer = require("./../lib/peer.js");
-var _ = require('underscore');
 
 describe("init", function () {
+
+    var Peer = require("./../lib/peer.js");
+    var PartialView = require("./../lib/partialView.js");
+    var _ = require('underscore');
 
     var a = {
         age : 1,
         address: "a",
-        peer: new Peer()
+        peer: new Peer(true)
     };
 
     var b = {
         age : 3,
         address: "b",
-        peer: new Peer()
+        peer: new Peer(true)
     };
 
     // ===========================================================
@@ -30,7 +31,7 @@ describe("init", function () {
             a: {
                 age : 1,
                 address: "a",
-                peer: new Peer()
+                peer: new Peer(true)
             }
         });
     });
@@ -43,12 +44,12 @@ describe("init", function () {
             a: {
                 age : 1,
                 address: "a",
-                peer: new Peer()
+                peer: new Peer(true)
             },
             b:{
                 age : 3,
                 address: "b",
-                peer: new Peer()
+                peer: new Peer(true)
             }
         });
     });
@@ -75,7 +76,7 @@ describe("init", function () {
             b:{
                 age : 3,
                 address: "b",
-                peer: new Peer()
+                peer: new Peer(true)
             }
         });
     });
@@ -93,12 +94,12 @@ describe("init", function () {
             a: {
                 age : 2,
                 address: "a",
-                peer: new Peer()
+                peer: new Peer(true)
             },
             b:{
                 age : 4,
                 address: "b",
-                peer: new Peer()
+                peer: new Peer(true)
             }
         });
     });
@@ -120,6 +121,21 @@ describe("init", function () {
         pv.insert(c);
         pv.insert(d);
         expect(pv.sample(3).length).toEqual(3);
+    });
+
+    it("should sample with filter", function () {
+        var pv = new PartialView();
+
+        var c = _.clone(a);
+        var d = _.clone(a);
+        c.address = 'c';
+        d.address = 'd';
+
+        pv.insert(_.clone(a));
+        pv.insert(_.clone(b));
+        pv.insert(c);
+        pv.insert(d);
+        expect(pv.sample(3, ['a','b','c'])).toEqual([d]);
     });
 
     // ===========================================================
