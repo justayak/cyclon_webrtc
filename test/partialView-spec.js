@@ -158,6 +158,35 @@ describe("init", function () {
         expect(pv.findOldest()).toEqual(c);
     });
 
+    it("should not find the oldest", function () {
+        var pv = new PartialView();
+        expect(pv.findOldest()).toEqual(null);
+    });
+
+    // ===========================================================
+    // ***********************************************************
+    // ===========================================================
+
+    it("should merge fine", function (done) {
+        var pv = new PartialView();
+        var c = _.clone(a);
+        var d = _.clone(a);
+        c.address = 'c';
+        c.age = 99;
+        d.address = 'd';
+        pv.insert(_.clone(a));
+        pv.insert(_.clone(b));
+        pv.insert(c);
+        pv.insert(d);
+        var mediator = new Peer(true);
+        pv.merge(mediator,
+            [{address:'c', age:2}, {address:'q', age:4}],
+            [{address:'a', age:4}, {address:'b', age:2}],3, function () {
+                expect(_.plunck(pv.neighbors, 'address')).toEqual(['c','d','q']);
+                done();
+        });
+    });
+
     // ===========================================================
     // ***********************************************************
     // ===========================================================

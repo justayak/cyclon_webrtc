@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/justayak/cyclon_webrtc",
   "dependencies": {
-      "yutils" : ">=0.0.9",
+      "yutils" : ">=0.0.10",
       "webrtc-adapter" : "*",
       "underscore" : ">=1.7.0"
   },
